@@ -1,0 +1,20 @@
+{
+  "name": "roba-pesa",
+  "version": "1.0.0",
+  "description": "log your weight",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tuskerette/robaPesa.git"
+  },
+  "author": "Valeria Graffeo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuskerette/robaPesa/issues"
+  },
+  "homepage": "https://github.com/tuskerette/robaPesa#readme"
+}
