@@ -2,7 +2,7 @@ var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var Record = require('./app/models/record.js');
+var Weight = require('./app/models/weight.js');
 
 mongoose.connect('mongodb://tuskerette:123456@ds011943.mlab.com:11943/roba-pesa');
 
@@ -21,15 +21,15 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.route('/records')
+router.route('/weights')
   .post(function(req, res) {
-    var record = new Record({
+    var weight = new Weight({
       kg: req.body.kg,
       created_at: Date.now()
     });
 
 
-    record.save(function(err) {
+    weight.save(function(err) {
       if (err) {
         console.log(err);
       } else {
@@ -38,32 +38,31 @@ router.route('/records')
     });
   })
   .get(function(req, res) {
-    Record.find(function(err, records) {
+    Weight.find(function(err, weights) {
       if (err) {
         console.log(err);
       } else {
-        res.json(records);
+        res.json(weights);
       }
     });
   });
-  router.route('/records/:record_id')
+  router.route('/weights/:weight_id')
   .get(function(req, res) {
-    Record.findById(req.params.record_id, function(err, record) {
+    Weight.findById(req.params.weight_id, function(err, weight) {
         if (err) {
           res.send(err);
         } else {
-          res.json(record);
+          res.json(weight);
         }
     });
   })
   .put(function(req, res) {
-    Record.findById(req.params.record_id, function(err, record) {
+    Weight.findById(req.params.weight_id, function(err, weight) {
       if (err) {
         res.send(err);
       } else {
-        record.kg = req.body.kg;
-        record.updated_at = Date();
-        record.save(function(err) {
+        weight.kg = req.body.kg;
+        weight.save(function(err) {
           if (err) {
             res.send(err);
           } else {
@@ -75,9 +74,9 @@ router.route('/records')
     });
   })
   .delete(function(req, res) {
-    Record.remove({
-      _id: req.params.record_id
-    }, function(err, record) {
+    Weight.remove({
+      _id: req.params.weight_id
+    }, function(err, weight) {
       if (err) {
         res.send(err);
       } else {
