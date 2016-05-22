@@ -25,7 +25,7 @@ router.route('/records')
   .post(function(req, res) {
     var record = new Record();
     record.kg = req.body.kg;
-    record.createdAt = req.body.createdAt;
+    created_at = Date.now();
 
     record.save(function(err) {
       if (err) {
@@ -59,7 +59,16 @@ router.route('/records')
       if (err) {
         res.send(err);
       } else {
-        res.json({ message: 'Entry updated' });
+        record.kg = req.body.kg;
+        record.updated_at = Date();
+        record.save(function(err) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json({ message: 'Entry updated' });
+          }
+        })
+
       }
     });
   })
