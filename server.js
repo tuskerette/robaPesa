@@ -6,7 +6,9 @@ var Record = require('./app/models/record.js');
 
 mongoose.connect('mongodb://tuskerette:123456@ds011943.mlab.com:11943/roba-pesa');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
@@ -27,14 +29,13 @@ router.route('/records')
   .post(function(req, res) {
     var record = new Record();
     record.kg = req.body.kg;
-    console.log(req.body);
+    record.date = req.body.date;
+
     record.save(function(err) {
       if (err) {
         console.log(err);
-        res.sendStatus(400);
       } else {
         res.json({ message: 'Entry recorded' });
-        res.sendStatus(201);
       }
     });
   })
@@ -43,10 +44,18 @@ router.route('/records')
       if(err) {
         console.log(err);
       } else {
-        res.json({ message: 'All the entries' });
+        res.json(records);
       }
     });
   });
+  router.route('/records/:record_id')
+  .get(function(req, res) {
+    Record.findById(req.params.record_id, function(err, record) {
+        if (err)
+            res.send(err);
+        res.json(record);
+    });
+    });
 
 
 // REGISTER ROUTES
