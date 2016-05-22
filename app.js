@@ -6,9 +6,7 @@ var Weight = require('./app/models/weight.js');
 
 mongoose.connect('mongodb://tuskerette:123456@ds011943.mlab.com:11943/roba-pesa');
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
@@ -27,8 +25,6 @@ router.route('/weights')
       kg: req.body.kg,
       created_at: Date.now()
     });
-
-
     weight.save(function(err) {
       if (err) {
         console.log(err);
@@ -68,8 +64,7 @@ router.route('/weights')
           } else {
             res.json({ message: 'Entry updated' });
           }
-        })
-
+        });
       }
     });
   })
@@ -85,14 +80,8 @@ router.route('/weights')
     })
   })
 
-
 // REGISTER ROUTES
 app.use('/api', router);
 
-var server = app.listen(8080, function() {
-
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('The server is up and listening at http://%s:%s', host, port);
-});
+app.listen(port);
+console.log('Go to ' + port);
