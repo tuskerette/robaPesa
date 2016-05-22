@@ -23,9 +23,11 @@ router.use(function(req, res, next) {
 
 router.route('/records')
   .post(function(req, res) {
-    var record = new Record();
-    record.kg = req.body.kg;
-    created_at = Date.now();
+    var record = new Record({
+      kg: req.body.kg,
+      created_at: Date.now()
+    });
+
 
     record.save(function(err) {
       if (err) {
