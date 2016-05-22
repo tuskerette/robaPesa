@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 var RecordSchema = new Schema({
   kg: Number,
-  date: String
+  createdAt: {
+    type: Date
+  }
 });
 var Record = mongoose.model('Record', RecordSchema);
 module.exports = Record;

@@ -21,15 +21,11 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/', function(req, res) {
-  res.json({ message: 'it works' });
-});
-
 router.route('/records')
   .post(function(req, res) {
     var record = new Record();
     record.kg = req.body.kg;
-    record.date = req.body.date;
+    record.createdAt = req.body.createdAt;
 
     record.save(function(err) {
       if (err) {
@@ -41,7 +37,7 @@ router.route('/records')
   })
   .get(function(req, res) {
     Record.find(function(err, records) {
-      if(err) {
+      if (err) {
         console.log(err);
       } else {
         res.json(records);
@@ -51,11 +47,33 @@ router.route('/records')
   router.route('/records/:record_id')
   .get(function(req, res) {
     Record.findById(req.params.record_id, function(err, record) {
-        if (err)
-            res.send(err);
-        res.json(record);
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(record);
+        }
     });
+  })
+  .put(function(req, res) {
+    Record.findById(req.params.record_id, function(err, record) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json({ message: 'Entry updated' });
+      }
     });
+  })
+  .delete(function(req, res) {
+    Record.remove({
+      _id: req.params.record_id
+    }, function(err, record) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json({ message: 'Successfully deleted' });
+      }
+    })
+  })
 
 
 // REGISTER ROUTES
